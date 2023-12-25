@@ -1,4 +1,27 @@
 #############
+# zsh setup #
+#############
+
+fpath+=($HOME/.zsh/pure)
+
+# load pure prompt
+autoload -U promptinit; promptinit
+prompt pure
+
+# configure autocompletion
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
+zstyle :compinstall filename '/home/lpoorth/.zshrc'
+
+autoload -Uz compinit
+compinit
+
+# history settings
+HISTFILE=~/.histfile
+HISTSIZE=10000
+SAVEHIST=10000
+bindkey -e
+
+#############
 # ESSENTIAL #
 #############
 
@@ -42,11 +65,6 @@ then
   autoload -Uz compinit
   compinit
 fi
-
-# load pure prompt
-autoload -U promptinit; promptinit
-prompt pure
-
 
 ####################
 # ESSENTIAL FOOTER #
