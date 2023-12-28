@@ -43,8 +43,12 @@ export NVM_DIR="$HOME/.nvm"
 ### application overwrites ###
 
 # fancy cat
-export BAT_THEME=OneHalfLight # (good with solarized light theme)
+export BAT_THEME=gruvbox-dark # (good with solarized light theme)
 alias cat=bat
+
+alias ls="ls --color=always"
+alias ll="ls -lisa"
+eval $(dircolors ~/.dir_colors/badwolf.dircolors)
 
 alias vim=nvim
 
@@ -74,21 +78,3 @@ fi
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-
-# pnpm
-export PNPM_HOME="/Users/A19D46E/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-# bun completions
-[ -s "/Users/A19D46E/.bun/_bun" ] && source "/Users/A19D46E/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-
-# Load Angular CLI autocompletion.
-source <(ng completion script)
