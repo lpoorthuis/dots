@@ -46,11 +46,17 @@ export NVM_DIR="$HOME/.nvm"
 export BAT_THEME=gruvbox-dark # (good with solarized light theme)
 alias cat=bat
 
+alias vim=nvim
+
+# fancy ls
 alias ls="ls --color=always"
 alias ll="ls -lisa"
-eval $(dircolors ~/.dir_colors/badwolf.dircolors)
+eval $(dircolors ~/.dir_colors/bliss.dircolors)
 
-alias vim=nvim
+# fancy ctrl r
+source /usr/share/fzf/key-bindings.zsh
+source /usr/share/fzf/completion.zsh
+export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200' --select-1 --exit-0"
 
 # kube cluster name in prompt (also add kube-ps1 to plugins)
 #PROMPT='$(kube_ps1)'$PROMPT
