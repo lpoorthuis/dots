@@ -1,0 +1,14 @@
+configuration {
+    modi: "combi,drun,run,p:$HOME/.config/rofi/rofi-power-menu --symbols-font 'Symbols Nerd Font Mono'";
+    width: 60;
+    lines: 18;
+    columns: 2;
+    font: "sans bold 17";
+    terminal: "foot";
+    sidebar-mode: true;
+    combi-modi: "drun,run,p:$HOME/.config/rofi/rofi-power-menu --choices suspend,reboot,shutdown --symbols-font 'Symbols Nerd Font Mono'";
+    matching: "fuzzy";
+    window-format: "{w:2} {c} {t}";
+    combi-hide-mode-prefix: true;
+}
+@theme "$HOME/.config/rofi/themes/gruvobx/gruvbox-dark-hard.rasi"

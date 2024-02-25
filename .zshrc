@@ -43,7 +43,7 @@ export NVM_DIR="$HOME/.nvm"
 ### application overwrites ###
 
 # fancy cat
-export BAT_THEME=gruvbox-dark # (good with solarized light theme)
+export BAT_THEME=gruvbox-dark
 alias cat=bat
 
 alias vim=nvim
