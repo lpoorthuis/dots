@@ -10,7 +10,7 @@ prompt pure
 
 # configure autocompletion
 zstyle ':completion:*' completer _expand _complete _ignored _approximate
-zstyle :compinstall filename '/home/lpoorth/.zshrc'
+zstyle :compinstall filename '$HOME/.zshrc'
 
 autoload -Uz compinit
 compinit
@@ -35,6 +35,11 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
+export FLYCTL_INSTALL="$HOME/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+# alias to start up zwift
+alias startzwift="sudo systemctl start docker && zwift"
 
 ###############
 # FANCY STUFF #

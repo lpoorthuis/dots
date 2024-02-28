@@ -1,6 +1,11 @@
 #!/bin/zsh
 
-cp -r .config $HOME/
-cp -r .dir_colors $HOME/
+if [[ "$(uname)" == "Linux" ]]; then
+    cp -r .config $HOME/
+elif [[ "$(uname)" == "Darwin" ]]; then
+    cp -r .config/kitty $HOME/kitty/
+    cp -r .config/nvim $HOME/nvim/
+fi
 
+cp -r .dir_colors $HOME/
 cp .zshrc $HOME/
