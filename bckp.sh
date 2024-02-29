@@ -7,5 +7,5 @@ cp -r $HOME/.config/kitty ./.config/
 cp -r $HOME/.config/nvim ./.config/
 
 if [[ "$(uname)" == "Linux" ]]; then
-    cp -r ~/.config/kglobalshortcutsrc ./.config/
+    cp -r ~/.config/k*rc ./.config/
 fi

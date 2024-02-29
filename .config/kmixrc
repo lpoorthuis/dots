@@ -1,0 +1,6 @@
+[$Version]
+update_info=disable_kmix.upd:PlasmaVolume_DisableKMixAutostart
+
+[DialogSelectMaster]
+Height 1440=318
+Width 2560=269
