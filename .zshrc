@@ -1,27 +1,4 @@
 #############
-# zsh setup #
-#############
-
-fpath+=($HOME/.zsh/pure)
-
-# load pure prompt
-autoload -U promptinit; promptinit
-prompt pure
-
-# configure autocompletion
-zstyle ':completion:*' completer _expand _complete _ignored _approximate
-zstyle :compinstall filename '$HOME/.zshrc'
-
-autoload -Uz compinit
-compinit
-
-# history settings
-HISTFILE=~/.histfile
-HISTSIZE=10000
-SAVEHIST=10000
-bindkey -e
-
-#############
 # ESSENTIAL #
 #############
 
@@ -35,11 +12,6 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-export FLYCTL_INSTALL="$HOME/.fly"
-export PATH="$FLYCTL_INSTALL/bin:$PATH"
-
-# alias to start up zwift
-alias startzwift="sudo systemctl start docker && zwift"
 
 ###############
 # FANCY STUFF #
@@ -47,21 +19,17 @@ alias startzwift="sudo systemctl start docker && zwift"
 
 ### application overwrites ###
 
+# enable dircolors
+export CLICOLOR=1
+test -r $HOME/.dircolors && eval "$(gdircolors $HOME/.dircolors)"
+
 # fancy cat
 export BAT_THEME=gruvbox-dark
 alias cat=bat
 
+alias grep=rg
 alias vim=nvim
-
-# fancy ls
-alias ls="ls --color=always"
-alias ll="ls -lisa"
-eval $(dircolors ~/.dir_colors/bliss.dircolors)
-
-# fancy ctrl r
-source /usr/share/fzf/key-bindings.zsh
-source /usr/share/fzf/completion.zsh
-export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200' --select-1 --exit-0"
+alias less=/opt/homebrew/Cellar/less/661/bin/less
 
 # kube cluster name in prompt (also add kube-ps1 to plugins)
 #PROMPT='$(kube_ps1)'$PROMPT
@@ -81,6 +49,13 @@ then
   compinit
 fi
 
+# load pure prompt
+autoload -U promptinit; promptinit
+prompt pure
+
+export MOB_TIMER_ROOM=team-tardigrades-42
+export MOB_OPEN_COMMAND="idea %s"
+
 ####################
 # ESSENTIAL FOOTER #
 ####################
@@ -89,3 +64,28 @@ fi
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+# pnpm
+export PNPM_HOME="/Users/A19D46E/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# Load Angular CLI autocompletion.
+source <(ng completion script)
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/A19D46E/tools/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/A19D46E/tools/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/A19D46E/tools/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/A19D46E/tools/google-cloud-sdk/completion.zsh.inc'; fi
+
+eval "$(atuin init zsh --disable-up-arrow)"
+
+# go
+export PATH="$HOME/go/bin/:$PATH"
+
+# opencode
+export PATH=/Users/A19D46E/.opencode/bin:$PATH
+export PATH="/Users/A19D46E/.local/bin:$PATH"
