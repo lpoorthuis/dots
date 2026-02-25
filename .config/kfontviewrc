@@ -1,9 +1,0 @@
-[KFileDialog Settings]
-Recent Files[$e]=InputMono-Regular.ttf,file:$HOME/tools/input_font/Input_Fonts/InputMono/InputMono/InputMono-Regular.ttf
-Recent URLs[$e]=file:$HOME/tools/input_font/Input_Fonts/InputMono/InputMono/
-detailViewIconSize=16
-
-[MainWindow]
-MenuBar=Disabled
-State=AAAA/wAAAAD9AAAAAAAAAoAAAAGyAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAEAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAA
-ToolBarsMovable=Disabled
