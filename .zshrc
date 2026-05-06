@@ -5,6 +5,9 @@
 # auth for bigtable and kubectl
 export USE_GKE_GCLOUD_AUTH_PLUGIN=True
 
+export GOOGLE_CLOUD_LOCATION=europe-west1
+export GOOGLE_CLOUD_PROJECT=rd-pickachu-prod792-dev
+
 # needed when building latex container locally
 alias golinux=""
 
@@ -59,6 +62,20 @@ unset _zcompdump
 autoload -U promptinit; promptinit
 prompt pure
 
+# Set Ghostty tab title to current directory name only (basename)
+if [[ -n $GHOSTTY_RESOURCES_DIR ]]; then
+  _ghostty_hook_title() {
+    # Redefine to: report CWD via OSC 7 (for dir inheritance) + set title via OSC 2 (basename only)
+    _ghostty_report_pwd() {
+      builtin print -nu $_ghostty_fd '\e]7;kitty-shell-cwd://'"$HOST""$PWD"'\a'
+      builtin print -nu $_ghostty_fd '\e]2;'"${PWD:t}"'\a'
+    }
+    # Only need to patch once, then remove this hook
+    precmd_functions=(${precmd_functions:#_ghostty_hook_title})
+  }
+  precmd_functions+=(_ghostty_hook_title)
+fi
+
 export MOB_TIMER_ROOM=team-tardigrades-42
 export MOB_OPEN_COMMAND="idea %s"
 
@@ -99,23 +116,52 @@ if [ -f '/Users/A19D46E/tools/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/A
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/A19D46E/tools/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/A19D46E/tools/google-cloud-sdk/completion.zsh.inc'; fi
 
+# fancy history
 eval "$(atuin init zsh --disable-up-arrow)"
+
+# dir related conv
 
 # go
 export PATH="$HOME/go/bin/:$PATH"
+
+# git agent commit
+export PATH="$HOME/workspace/lpoorth/git-agent/bin:$PATH"
 
 # opencode
 export PATH=/Users/A19D46E/.opencode/bin:$PATH
 export PATH="/Users/A19D46E/.local/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
-_nvm_lazy_load() {
-  unset -f nvm node npm npx corepack _nvm_lazy_load
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+ [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+ [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# bun completions
+[ -s "/Users/A19D46E/.bun/_bun" ] && source "/Users/A19D46E/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+eval "$(direnv hook zsh)"
+
+# Set MCPORTER_CONFIG based on current directory under rewe-digital-fulfillment
+_mcporter_chpwd() {
+  local config_base="$HOME/.mcporter"
+  local ffp_base="$HOME/workspace/rewe-digital-fulfillment"
+  if [[ "$PWD" == "$ffp_base"/* ]]; then
+    if [[ "$PWD" == *frontend* ]]; then
+      export MCPORTER_CONFIG="$config_base/mcporter_frontend.json"
+      echo "mcporter: config set to frontend"
+    else
+      export MCPORTER_CONFIG="$config_base/mcporter_ffp.json"
+      echo "mcporter: config set to default"
+    fi
+  elif [[ -n "$MCPORTER_CONFIG" ]]; then
+    unset MCPORTER_CONFIG
+    echo "mcporter: config unloaded"
+  fi
 }
-nvm() { _nvm_lazy_load; nvm "$@"; }
-node() { _nvm_lazy_load; node "$@"; }
-npm() { _nvm_lazy_load; npm "$@"; }
-npx() { _nvm_lazy_load; npx "$@"; }
-corepack() { _nvm_lazy_load; corepack "$@"; }
+# guard against duplicate registration on re-source
+if (( ! ${chpwd_functions[(Ie)_mcporter_chpwd]} )); then
+  chpwd_functions+=(_mcporter_chpwd)
+fi
+_mcporter_chpwd  # run once for the initial directory
